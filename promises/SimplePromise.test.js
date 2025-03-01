@@ -29,6 +29,18 @@ describe("then", () => {
       .then((v) => v * 4)
       .then((v) => expect(v).toEqual(12));
   });
+
+  it("with async process", () => {
+    const p = asyncPromise({ value: 3 });
+    p.then((v) => expect(v).toEqual(3));
+    p.then((v) => expect(v).toEqual(3));
+    p.then((v) => {
+      expect(v).toEqual(3);
+      return v * 4;
+    }).then((v) => {
+      expect(v).toEqual(12);
+    });
+  });
 });
 
 xdescribe("catch", () => {
@@ -155,5 +167,13 @@ xdescribe("static methods", () => {
 function promise({ value = DEFAULT_VALUE, fail = false } = {}) {
   return new MyPromise((resolve, reject) => {
     fail ? reject(value) : resolve(value);
+  });
+}
+
+function asyncPromise({ value = DEFAULT_VALUE, fail = false } = {}) {
+  return new MyPromise((resolve, reject) => {
+    setTimeout(() => {
+      fail ? reject(value) : resolve(value);
+    }, 3000);
   });
 }
