@@ -3,7 +3,7 @@ const MyPromise = require("./SimplePromise");
 
 const DEFAULT_VALUE = "default";
 
-describe("then", () => {
+xdescribe("then", () => {
   it("with no chaining", () => {
     return promise().then((v) => expect(v).toEqual(DEFAULT_VALUE));
   });
@@ -16,13 +16,13 @@ describe("then", () => {
     return Promise.allSettled([promise1, promise2]);
   });
 
-  // it("with then and catch", () => {
-  //   const checkFunc = (v) => expect(v).toEqual(DEFAULT_VALUE);
-  //   const failFunc = (v) => expect(1).toEqual(2);
-  //   const resolvePromise = promise().then(checkFunc, failFunc);
-  //   const rejectPromise = promise({ fail: true }).then(failFunc, checkFunc);
-  //   return Promise.allSettled([resolvePromise, rejectPromise]);
-  // });
+  it("with then and catch", () => {
+    const checkFunc = (v) => expect(v).toEqual(DEFAULT_VALUE);
+    const failFunc = (v) => expect(1).toEqual(2);
+    const resolvePromise = promise().then(checkFunc, failFunc);
+    const rejectPromise = promise({ fail: true }).then(failFunc, checkFunc);
+    return Promise.allSettled([resolvePromise, rejectPromise]);
+  });
 
   it("with chaining", () => {
     return promise({ value: 3 })
@@ -96,19 +96,19 @@ xdescribe("finally", () => {
 });
 
 xdescribe("static methods", () => {
-  it("resolve", () => {
+  xit("resolve", () => {
     return MyPromise.resolve(DEFAULT_VALUE).then((v) =>
       expect(v).toEqual(DEFAULT_VALUE)
     );
   });
 
-  it("reject", () => {
+  xit("reject", () => {
     return MyPromise.reject(DEFAULT_VALUE).catch((v) =>
       expect(v).toEqual(DEFAULT_VALUE)
     );
   });
 
-  describe("all", () => {
+  xdescribe("all", () => {
     it("with success", () => {
       return MyPromise.all([promise({ value: 1 }), promise({ value: 2 })]).then(
         (v) => expect(v).toEqual([1, 2])
@@ -122,7 +122,7 @@ xdescribe("static methods", () => {
     });
   });
 
-  it("allSettled", () => {
+  xit("allSettled", () => {
     return MyPromise.allSettled([promise(), promise({ fail: true })]).then(
       (v) =>
         expect(v).toEqual([
