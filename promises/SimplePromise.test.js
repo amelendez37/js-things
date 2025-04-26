@@ -1,9 +1,10 @@
-const MyPromise = require("./SimplePromise");
+// const MyPromise = require("./SimplePromise");
+const MyPromise = require("./SimplePromiseB");
 // const MyPromise = Promise;
 
 const DEFAULT_VALUE = "default";
 
-xdescribe("then", () => {
+describe("then", () => {
   it("with no chaining", () => {
     return promise().then((v) => expect(v).toEqual(DEFAULT_VALUE));
   });
@@ -43,7 +44,7 @@ xdescribe("then", () => {
   });
 });
 
-xdescribe("catch", () => {
+describe("catch", () => {
   it("with no chaining", () => {
     return promise({ fail: true }).catch((v) =>
       expect(v).toEqual(DEFAULT_VALUE)
@@ -67,7 +68,7 @@ xdescribe("catch", () => {
   });
 });
 
-xdescribe("finally", () => {
+describe("finally", () => {
   it("with no chaining", () => {
     const checkFunc = (v) => (v) => expect(v).toBeUndefined();
     const successPromise = promise().finally(checkFunc);
@@ -95,20 +96,20 @@ xdescribe("finally", () => {
   });
 });
 
-xdescribe("static methods", () => {
-  xit("resolve", () => {
+describe("static methods", () => {
+  it("resolve", () => {
     return MyPromise.resolve(DEFAULT_VALUE).then((v) =>
       expect(v).toEqual(DEFAULT_VALUE)
     );
   });
 
-  xit("reject", () => {
+  it("reject", () => {
     return MyPromise.reject(DEFAULT_VALUE).catch((v) =>
       expect(v).toEqual(DEFAULT_VALUE)
     );
   });
 
-  xdescribe("all", () => {
+  describe("all", () => {
     it("with success", () => {
       return MyPromise.all([promise({ value: 1 }), promise({ value: 2 })]).then(
         (v) => expect(v).toEqual([1, 2])
